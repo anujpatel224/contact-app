@@ -14,22 +14,23 @@ function App() {
     localStorage.setItem(LOCAL_STORAGE_KEY,JSON.stringify(contacts));
   },[contacts])
 
+  const removeContactHandler = (id) =>{
+    const newContactList = contacts.filter((contact) =>{
+      return contact.id !== id;
+    });
+    setContacts(newContactList);
+  }
   const addContactHandler = (contact)=>{
       setContacts([...contacts, {id: v4(),...contact}]);
   }
 
-  const getContactId =(id) =>{
-    contacts.splice(contacts.findIndex((i)=>{
-      return i.id === id;
-  }), 1)
-  }
   return (
     <div className="ui container">
       <Header />
       <AddContact addContactHandler = {addContactHandler}/>
       <ContactList 
       contacts = {contacts}
-      getContactId={getContactId}/>
+      getContactId={removeContactHandler}/>
     </div>
   );
 }
